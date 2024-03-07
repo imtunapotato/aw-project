@@ -1,0 +1,12 @@
+## Context and Problem Statement
+Avoid complexity in the Stats screen
+## Decision Drivers
+* Divide the StatsGreen screen into logical building blocks
+* Ensure the ability to change system parts without affecting others
+
+## Decision Outcome
+We decided to divide the StatsGreen screen into a statistics and header & footer.
+### Consequences
+* Good: The header & footer can be used in another screen, promoting reusability. One team can be in charge of
+the stats and work separately.
+* Bad: Good communication for implementation is needed.

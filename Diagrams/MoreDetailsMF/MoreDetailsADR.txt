@@ -1,0 +1,10 @@
+## Context and Problem Statement
+Avoid complexity in the More Details screen
+## Decision Drivers
+* Ensure the ability to change system parts without affecting others
+
+## Decision Outcome
+The MoreDetails screen only has one component. Because of this, only one team should be responsible for the screen.
+### Consequences
+* Good: 
+* Bad: Good communication for implementation is needed.
