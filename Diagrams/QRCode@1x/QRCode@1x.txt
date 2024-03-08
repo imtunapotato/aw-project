@@ -1,0 +1,10 @@
+## Context and Problem Statement
+Avoid complexity in the QRCode screen
+Promote Individuality
+## Decision Drivers
+Promote a non-overwhelming QRCode interface
+## Decision Outcome
+A single micro-frontend (besides header & footer) for individuality
+### Consequences
+* Good: User-friendly and intuitive
+* Bad:

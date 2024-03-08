@@ -1,0 +1,10 @@
+## Context and Problem Statement
+Feedback upon submitting a review on a product
+Promote Individuality
+## Decision Drivers
+Promote a user-friendly popup.
+## Decision Outcome
+A single micro-frontend (besides header & footer) for individuality
+### Consequences
+* Good: User-friendly and intuitive
+* Bad:

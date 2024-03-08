@@ -1,0 +1,11 @@
+## Context and Problem Statement
+Avoid complexity in the VacaProducts Screen, user-friendliness
+## Decision Drivers
+Ensure the ability to change system parts without affecting others.
+In this case, searching for different meat, or glancing at the featured/trending meat
+## Decision Outcome
+Two microfrontends (besides header & footer), one for viewing the featured meat,
+and another to search the different types of meat available.
+### Consequences
+* Good: Appealing and Simple
+* Bad:
