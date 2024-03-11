@@ -1,0 +1,13 @@
+## Context and Problem Statement
+Avoid complexity in the News screen
+Promote Individuality
+## Decision Drivers
+* Ensure the ability to view different section of news (featured and list of all news)
+without affecting the others
+
+## Decision Outcome
+Two Microfrontends (besides header & footer) to divide the
+featured/trending news and the most recent
+### Consequences
+* Good: Easier to visualize
+* Bad:

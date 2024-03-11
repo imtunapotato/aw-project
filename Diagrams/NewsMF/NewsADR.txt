@@ -1,5 +1,5 @@
 ## Context and Problem Statement
-Avoid complexity in the Stats screen
+Avoid complexity in the News screen
 ## Decision Drivers
  Divide the News screen into logical building blocks
  Ensure the ability to change system parts without affecting others

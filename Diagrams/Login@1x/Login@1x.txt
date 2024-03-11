@@ -1,0 +1,10 @@
+## Context and Problem Statement
+Avoid complexity in the Login screen
+## Decision Drivers
+* Ensure the ability to change system parts without affecting others
+
+## Decision Outcome
+The Login screen only has one component. Because of this, only one team should be responsible for the screen.
+### Consequences
+* Good: Easier to communicate since only one team produces this component
+* Bad:
