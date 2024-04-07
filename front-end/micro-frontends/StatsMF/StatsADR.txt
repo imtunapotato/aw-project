@@ -1,0 +1,16 @@
+## Context and Problem Statement
+Avoid complexity in the Stats screen
+## Decision Drivers
+* Divide the Stats screen into logical building blocks
+* Ensure the ability to change system parts without affecting others
+
+## Decision Outcome
+We decided to divide the Stats screen into a statistics and header & footer. The header & footer are not considered as a micro-frontend, because they are simple views with minimal services. 
+### Consequences
+* Good: The header & footer can be used in another screen, promoting reusability. One team can be in charge of
+the stats.
+* Bad: Good communication for implementation is needed.
+
+
+## More Information
+* We divided the system in three layers: UI, business logic, and data storage. 
