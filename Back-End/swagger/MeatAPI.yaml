@@ -1,0 +1,511 @@
+openapi: 3.0.0
+info:
+  title: "QRMeats API"
+  description: "API for meats and markets"
+  version: "1.0.0"
+
+servers:
+  - url: "/api"
+
+tags:
+  - name: "Supermarket Service"
+    description: "Manages supermarket based operations"
+    
+  - name: "Product Service"
+    description: "Manages Products"
+    
+  - name: "News Service"
+    description: "Manages News"
+    
+  - name: "Stats Service"
+    description: "Manages statistics"
+    
+  - name: "Feedback Service"
+    description: "Manages feedback"
+    
+  - name: "Authentication Service"
+    description: "Manages authentication"
+
+  - name: "User Service"
+    description: "Manages the user based operations"
+    
+
+components:
+  schemas:
+    User:
+      type: "object"
+      required:
+        - id
+        - username
+        - email
+      properties:
+        id:
+          type: "string"
+        username:
+          type: "string"
+        email:
+          type: "string"
+    Product:
+      type: "object"
+      required:
+        - id
+        - supermarket_id
+        - name
+        - details
+      properties:
+        id:
+          type: "string"
+        supermarket_id:
+          type: "string"
+        name:
+          type: "string"
+        details:
+          type: "array"
+          items:
+            type: "string"
+    News:
+      type: "object"
+      required:
+        - id
+        - title
+        - author
+        - text
+      properties:
+        id:
+          type: "string"
+        title:
+          type: "string"
+        author:
+          type: "string"
+        text:
+          type: "string"
+    Supermarket:
+      type: "object"
+      required:
+        - id
+        - name
+        - location
+      properties:
+        id:
+          type: "string"
+        name:
+          type: "string"
+        location:
+          type: "string"
+    Feedback:
+      type: "object"
+      required:
+        - id
+        - user_id
+        - product_id
+        - score
+      properties:
+        id:
+          type: "string"
+        user_id:
+          type: "string"
+        product_id:
+          type: "string"
+        score:
+          type: "number"
+    Stats:
+      type: "object"
+      required:
+        - id
+        - stats
+      properties:
+        id:
+          type: "string"
+        stats:
+          type: "array"
+          items:
+            type: "string"
+  parameters:
+    user_id:
+      name: "user_id"
+      description: "User id"
+      in: path
+      required: true
+      schema:
+        type: "string"
+    product_id:
+      name: "product_id"
+      description: "Product id"
+      in: path
+      required: true
+      schema:
+        type: "string"
+    supermarket_id:
+      name: "supermarket_id"
+      description: "Supermarket id"
+      in: path
+      required: true
+      schema:
+        type: "string"
+    news_id:
+      name: "news_id"
+      description: "News id"
+      in: path
+      required: true
+      schema:
+        type: "string"
+    score:
+      name: "score"
+      description: "Feedback score"
+      in: path
+      required: true
+      schema:
+        type: "integer"
+    qr_code_id:
+      name: "qr_code_id"
+      description: "Product's qr code"
+      in: path
+      required: true
+      schema:
+        type: "string"
+      
+      
+
+paths:
+  /auth/register:
+    post:
+      tags: 
+        - "Authentication Service"
+      summary: "Registers the user"
+      requestBody:
+              description: "User info"
+              content:
+                application/json:
+                  schema:
+                    type: "string"
+      responses:
+        "200":
+          description: "Successfully registered"
+  
+  /auth/login:
+    post:
+      tags:
+        - "Authentication Service"
+      summary: "Logins the user"
+      requestBody:
+          description: "Session key"
+          content:
+            application/json:
+              schema:
+                type: "string"   
+      responses:
+        "200":
+          description: "Login successful"    
+  /auth/logout:
+    post:
+      tags:
+        - "Authentication Service"
+      summary: "Logs out the user"   
+      responses:
+        "200":
+          description: "Logout successful"
+  /auth/password:
+    post:
+      tags:
+        - "Authentication Service"
+      summary: "Changes the user password"
+      requestBody:
+          description: "New password"
+          content:
+            application/json:
+              schema:
+                type: "string"   
+      responses:
+        "200":
+          description: "Password changed successfully"    
+          
+  /feedback/{product_id}/supermarket/{supermarket_id}/{score}:
+    post:
+      tags:
+        - "Feedback Service"
+      summary: "Give a product Feedback"
+      parameters:
+        - $ref : '#/components/parameters/product_id'
+        - $ref : '#/components/parameters/supermarket_id'
+        - $ref : '#/components/parameters/score'
+      responses:
+        "200":
+          description: "Feedback given successfully"          
+
+  /user/{user_id}:
+    get:
+      tags:
+        - "User Service"
+      summary: "Return user info"
+      parameters:
+        - $ref : '#/components/parameters/user_id'
+      responses:
+        "200":
+          description: "Successfully returned user"
+          content:
+            application/json:
+              schema:
+                  $ref: "#/components/schemas/User"
+    delete:
+      tags:
+        - "User Service"
+      summary: "Deletes a User"
+      parameters:
+        - $ref : '#/components/parameters/user_id'
+      responses:
+        "200":
+          description: "Successfully deleted User"
+    put:
+      tags:
+        - "User Service"
+      summary: "Update user info"
+      parameters:
+        - $ref : '#/components/parameters/user_id'
+      requestBody:
+        description: "New email"
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        "200":
+          description: "Value changed successfully"
+        
+
+          
+  /stats:
+    get:
+      tags:
+        - "Stats Service"
+      summary: "Returns stats"
+      responses:
+        "200":
+          description: "Successfully returned stats"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Stats"
+    post:
+      tags:
+        - "Stats Service"
+      summary: "Creates a statistic page"
+      requestBody:
+              description: "The statistics to add"
+              content:
+                application/json:
+                  schema:
+                    $ref: '#/components/schemas/Stats'
+      responses:
+        "200":
+          description: "Successfully added statistic"
+    put:
+      tags:
+        - "Stats Service"
+      summary: "Updates the statistics"
+      requestBody:
+        description: "The statistics to update"
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Stats'
+      responses:
+        "200" :
+          description: "Successfully updated statistics"
+  /news:
+    get:
+      tags:
+        - "News Service"
+      summary: "Retrieves all news"
+      responses:
+        "200":
+          description: "News retrieved successfully"
+          content:
+            application/json: 
+              schema:
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/News'
+    post:
+      tags:
+        - "News Service"
+      requestBody:
+        content:
+          application/json: 
+            schema:
+              $ref: '#/components/schemas/News'
+      summary: "Post news"
+      responses:
+        "200":
+          description: "News posted successfully"
+  /news/{news_id}:
+    get:
+      tags:
+        - "News Service"
+      summary: "Return the news by the specified id"
+      parameters:
+        - $ref: '#/components/parameters/news_id'
+      responses:
+        "200":
+          description: "Successfully returned the news"
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/News'
+    delete:
+      tags:
+        - "News Service"
+      summary: "Delete the news by the specified id"
+      parameters:
+        - $ref: '#/components/parameters/news_id'
+      responses:
+        "200":
+          description: "Successfully deleted the news by the specified id"
+    put:
+      tags:
+        - "News Service"
+      summary: "Update the news by the specified id"
+      parameters:
+        - $ref: '#/components/parameters/news_id'
+      requestBody:
+        content:
+          application/json: 
+            schema:
+              $ref: '#/components/schemas/News'
+      responses:
+        "200":
+          description: "Successfully updated the news by the specified id"
+  /supermarket:
+    get:
+      tags:
+        - "Supermarket Service"
+      summary: "Return all supermarkets"
+      responses:
+        "200":
+          description: "Successfully retrieved all supermarkets"
+          content:
+            application/json: 
+              schema:
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/Supermarket'
+    post:
+      tags:
+        - "Supermarket Service"
+      summary: "Insert a new supermarket"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Supermarket'
+      responses:
+        "200":
+          description: "Successfully inserted a new supermarket"
+
+  /supermarket/{supermarket_id}:
+    get:
+      tags:
+        - "Supermarket Service"
+      summary: "Return the supermarket by the specified id"
+      parameters:
+        - $ref: '#/components/parameters/supermarket_id'
+      responses:
+        "200":
+          description: "Successfully retrieved the supermarket"
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/Supermarket'
+    delete:
+      tags:
+        - "Supermarket Service"
+      summary: "Delete the supermarket by the specified id"
+      parameters:
+        - $ref: '#/components/parameters/supermarket_id'
+      responses:
+        "200":
+          description: "Successfully deleted the supermarket"
+
+  /product/supermarket/{supermarket_id}:
+    get:
+      tags:
+        - "Product Service"
+      summary: "Retrieve all products from a supermarket"
+      parameters:
+        - $ref: '#/components/parameters/supermarket_id'
+      responses:
+        "200":
+          description: "Successfully retrieved all products from the supermarket"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: '#/components/schemas/Product'
+    post:
+      tags:
+        - "Product Service"
+      summary: "Add a product to a supermarket"
+      parameters:
+        - $ref: '#/components/parameters/supermarket_id'
+      requestBody:
+        content:
+          application/json: 
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        "200":
+          description: "Successfully added a product to the supermarket"
+  /product/{product_id}/supermarket/{supermarket_id}:
+    get:
+      tags:
+        - "Product Service"
+      summary: "Retrieve a specified product from a supermarket"
+      parameters:
+        - $ref: '#/components/parameters/product_id'
+        - $ref: '#/components/parameters/supermarket_id'
+      responses:
+        "200":
+          description: "Successfully retrieved the product from the supermarket"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+    delete:
+      tags:
+        - "Product Service"
+      summary: "Delete a product from a supermarket"
+      parameters:
+        - $ref: '#/components/parameters/product_id'
+        - $ref: '#/components/parameters/supermarket_id'
+      responses:
+        "200":
+          description: "Successfully deleted the product from the supermarket"
+    put:
+      tags:
+        - "Product Service"
+      summary: "Update a product from a supermarket"
+      parameters:
+        - $ref: '#/components/parameters/product_id'
+        - $ref: '#/components/parameters/supermarket_id'
+      requestBody:
+        content:
+          application/json: 
+            schema:
+              $ref: '#/components/schemas/Product'
+      responses:
+        "200":
+          description: "Successfully updated the product from the supermarket"      
+  /product/{qr_code_id}:
+    get:
+      tags:
+        - "Product Service"
+      summary: "Retrieve a product by its qr code"
+      parameters:
+        - $ref: '#/components/parameters/qr_code_id'
+      responses:
+        "200":
+          description: "Successfully retrieved the product"
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/Product'
