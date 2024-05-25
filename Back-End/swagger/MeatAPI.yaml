@@ -70,6 +70,7 @@ components:
         - title
         - author
         - text
+        - image_url
       properties:
         id:
           type: "string"
@@ -78,6 +79,8 @@ components:
         author:
           type: "string"
         text:
+          type: "string"
+        image_url:
           type: "string"
     Supermarket:
       type: "object"
